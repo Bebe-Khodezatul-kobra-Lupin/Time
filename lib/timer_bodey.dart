@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class Body extends StatefulWidget {
@@ -16,20 +17,61 @@ class _BodyState extends State<Body> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text("Add"),
+            title: Text(
+              "Add",
+              style: TextStyle(
+                color: Color(0xFF1c7589),
+              ),
+              textAlign: TextAlign.center,
+            ),
             content: Container(
               height: 150.0,
               child: Column(
-                children: [],
+                children: [
+                  TextField(
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(4.0),
+                          ),
+                        ),
+                        hintText: "Work Name",
+                        filled: true,
+                        fillColor: Color(0xFF73d6ff),
+                        focusColor: Color(0xFF31d6ff)),
+                  ),
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                  TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(4.0),
+                        ),
+                      ),
+                      hintText: "Work Time in Munites",
+                      filled: true,
+                      fillColor: Color(0xFF73d6ff),
+                      focusColor: Color(0xFF31d6ff),
+                    ),
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    keyboardType: TextInputType.number,
+                  ),
+                ],
               ),
             ),
             actions: [
               TextButton(
-                onPressed: () {},
-                child: Text('add'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('Add'),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
                 child: Text('Cancle'),
               ),
             ],
@@ -86,7 +128,9 @@ class _BodyState extends State<Body> {
           ),
           Expanded(
             child: CircularPercentIndicator(
-              radius: 180,
+              radius: constraints.maxWidth > constraints.maxHeight
+                  ? constraints.maxHeight * 0.40
+                  : constraints.maxWidth * 0.40,
               lineWidth: 10.0,
               percent: 1,
               center: Text(
